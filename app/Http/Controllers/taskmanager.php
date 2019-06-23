@@ -32,7 +32,7 @@ class taskmanager extends Controller
    	  $myid = $user->id;
 
       if($user->rol == '0'){
-      	  $newtask = Task::with('user')->where('statue','0')->where('assignedto',$myid)->orderBy('deadline', 'Asc')->get();
+          $newtask = Task::with('user')->where('statue','0')->where('assignedto',$myid)->orderBy('deadline', 'Asc')->get();
    	  $inprogress = Task::with('user')->where('statue','1')->where('assignedto',$myid)->orderBy('deadline', 'Asc')->get();
    	  $rejected = Task::with('user')->where('statue','3')->where('assignedto',$myid)->orderBy('created_at', 'Asc')->get();
    	  $done = Task::with('user')->where('statue','2')->where('assignedto',$myid)->orderBy('deadline', 'Asc')->get();
