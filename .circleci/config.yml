@@ -1,52 +1,58 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
 version: 2
-
 jobs:
   build:
     docker:
+      # Specify the version you desire here
       - image: circleci/php:7.1-node-browsers
-        environment:
-          MYSQL_HOST: 127.0.0.1
-          MYSQL_DB: homestead
-          MYSQL_USER: root
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
-          MYSQL_PASSWORD:
-      - image: mysql:5.7
-        command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --innodb-large-prefix=true --innodb-file-format=Barracuda
-        environment:
-          MYSQL_USER: root
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
 
-    working_directory: ~/laravel
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # Using the RAM variation mitigates I/O contention
+      # for database intensive operations.
+      # - image: circleci/mysql:5.7-ram
+      #
+      # - image: redis:2.8.19
 
     steps:
       - checkout
-      - run: sudo apt install -y libsqlite3-dev zlib1g-dev
+
+      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
-      - run: sudo apt install -y mysql-client
-      # - run: sudo apt-get install php7.0-mysql
-      # - run: sudo apt-get install php-mysql
-      - run: sudo composer self-update
+
+      # Download and cache dependencies
       - restore_cache:
           keys:
-            - composer-v1-{{ checksum "composer.lock" }}
-            - composer-v1-
-      - run: composer install --dev --ignore-platform-reqs
+            # "composer.lock" can be used if it is committed to the repo
+            - v1-dependencies-{{ checksum "composer.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: composer install -n --prefer-dist
+
       - save_cache:
-          key: composer-v1-{{ checksum "composer.lock" }}
+          key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
-            - vendor
-      - run:
-          name: Mysql database
-          command: mysql  -h 127.0.0.1 -u root -e "create database homestead;"
-      - run: echo ""  >> /etc/php/php.ini
-      - run: echo "extension = mysqlnd.so"  >> /etc/php/php.ini
-      - run: echo "extension = pdo.so"  >> /etc/php/php.ini
-      - run: echo "extension = pdo_mysql.so"  >> /etc/php/php.ini
-      - run: cat /etc/php/php.ini
-      - run: cp .env.example .env
-      - run: php artisan key:generate
-      - run: php artisan migrate
-      - run: mkdir -p build/logs
-      - run: php vendor/bin/phpunit tests/ --coverage-clover build/logs/clover.xml
-      - run: php vendor/bin/phpcbf --standard=ruleset.xml app/
-      - run: php vendor/bin/phpcs --standard=ruleset.xml app/
+            - ./vendor
+      - restore_cache:
+          keys:
+            - node-v1-{{ checksum "package.json" }}
+            - node-v1-
+      - run: yarn install
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
+      # prepare the database
+      - run: touch storage/testing.sqlite
+      - run: php artisan migrate --env=testing --database=sqlite_testing --force
+
+      # run tests with phpunit or codecept
+      #- run: ./vendor/bin/phpunit
+      - run: ./vendor/bin/codecept build
+      - run: ./vendor/bin/codecept run
