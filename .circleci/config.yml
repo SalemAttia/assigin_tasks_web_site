@@ -23,7 +23,7 @@ jobs:
       - run: sudo apt install -y libsqlite3-dev zlib1g-dev
       - run: sudo docker-php-ext-install zip
       - run: sudo apt install -y mysql-client
-      - run: sudo apt-get install php7.0-mysql
+      # - run: sudo apt-get install php7.0-mysql
       # - run: sudo apt-get install php-mysql
       - run: sudo composer self-update
       - restore_cache:
@@ -38,6 +38,11 @@ jobs:
       - run:
           name: Mysql database
           command: mysql  -h 127.0.0.1 -u root -e "create database homestead;"
+      - run: echo ""  >> /etc/php/php.ini
+      - run: echo "extension = mysqlnd.so"  >> /etc/php/php.ini
+      - run: echo "extension = pdo.so"  >> /etc/php/php.ini
+      - run: echo "extension = pdo_mysql.so"  >> /etc/php/php.ini
+      - run: cat /etc/php/php.ini
       - run: cp .env.example .env
       - run: php artisan key:generate
       - run: php artisan migrate
