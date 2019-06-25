@@ -11,8 +11,8 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $response = $this->get('/');
+        $response = $this->get('/login');
 
-        $response->assertSee('TASK MANAGER');
+        $response->assertSee('Login');
     }
 }
