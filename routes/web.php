@@ -11,14 +11,13 @@
 |
 */
 
-Route::get('/','taskmanager@tasks');
-Route::get('/task/{id}','taskmanager@singletask');
-Route::get('/task/download/{id}','taskmanager@download');
-Route::post('/update','taskmanager@update');
-Route::post('/addnewtask','taskmanager@addnewtask');
-Route::post('/addnewuser','taskmanager@addnewuser');
+Route::get('/', 'taskmanager@tasks');
+Route::get('/task/{id}', 'taskmanager@singletask');
+Route::get('/task/download/{id}', 'taskmanager@download');
+Route::post('/update', 'taskmanager@update');
+Route::post('/addnewtask', 'taskmanager@addnewtask');
+Route::post('/addnewuser', 'taskmanager@addnewuser');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-

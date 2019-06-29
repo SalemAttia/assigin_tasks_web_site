@@ -72,7 +72,7 @@ class taskmanager extends Controller
         $updated_at = date('Y-m-d H:i:s');
 
         DB::table('tasks')->insert(
-            array('taskname' => $taskname, 'description' => $description, 'attachfile' => $attachfile, 'statue' => '0', 'assignedto' => $assignedto, 'deadline' => $deadline, 'created_at' => $created_at, 'updated_at' => $updated_at)
+            ['taskname' => $taskname, 'description' => $description, 'attachfile' => $attachfile, 'statue' => '0', 'assignedto' => $assignedto, 'deadline' => $deadline, 'created_at' => $created_at, 'updated_at' => $updated_at]
         );
 
         return redirect()->back();
@@ -99,7 +99,7 @@ class taskmanager extends Controller
         $updated_at = date('Y-m-d H:i:s');
 
         DB::table('users')->insert(
-            array('name' => $request->name, 'position' => $request->position, 'rol' => $request->rol, 'email' => $request->email, 'password' => bcrypt($request->password), 'avatar' => $avatar, 'slug' => str_slug($name), 'created_at' => $created_at, 'updated_at' => $updated_at)
+            ['name' => $request->name, 'position' => $request->position, 'rol' => $request->rol, 'email' => $request->email, 'password' => bcrypt($request->password), 'avatar' => $avatar, 'slug' => str_slug($name), 'created_at' => $created_at, 'updated_at' => $updated_at]
         );
 
         // flash('success','new user','new user added successfully');

@@ -18,7 +18,9 @@
                       
                               <a href="task/{{$task->id}}"><i class="fa fa-inbox"></i>{{$task->taskname}} 
                                @if(Auth::user()->rol == '1')
-                              <span class="pull-right"><input type="checkbox"  onchange="$('#form{{$task->id}}').submit();" value="" <?php if($task->statue == 0) echo "checked"; ?> class="custom-control-input"></span>
+                              <span class="pull-right"><input type="checkbox"  onchange="$('#form{{$task->id}}').submit();" value="" <?php if ($task->statue === 0) {
+    echo 'checked';
+} ?> class="custom-control-input"></span>
                               @endif
                                <span class="label label-danger pull-right">{{$task->deadline}}</span> </a>
 
