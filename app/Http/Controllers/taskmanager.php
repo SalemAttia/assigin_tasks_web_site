@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
@@ -54,6 +52,7 @@ class taskmanager extends Controller
     {
         $users = User::get();
         $newtask = Task::with('user')->where('id', $id)->get();
+
         return view('single', compact('newtask', 'users'));
     }
 
@@ -81,7 +80,7 @@ class taskmanager extends Controller
         $updated_at = date("Y-m-d H:i:s");
 
         DB::table('tasks')->insert(
-            array('taskname' => $taskname, 'description' => $description, 'attachfile' => $attachfile, 'statue' => '0','assignedto' => $assignedto,'deadline' => $deadline,'created_at' => $created_at,'updated_at' => $updated_at)
+            array('taskname' => $taskname, 'description' => $description, 'attachfile' => $attachfile, 'statue' => '0', 'assignedto' => $assignedto, 'deadline' => $deadline, 'created_at' => $created_at, 'updated_at' => $updated_at)
         );
        
         return redirect()->back();
@@ -91,6 +90,7 @@ class taskmanager extends Controller
     {
         $patha = 'app\uploads/'.$id;
         $path = storage_path($patha);
+
         return response()->download($path);
     }
     public function addnewuser(addnewuser $request)
@@ -109,8 +109,8 @@ class taskmanager extends Controller
 
        
         DB::table('users')->insert(
-             array('name' => $request->name,'position' => $request->position,'rol' => $request->rol,'email' => $request->email,'password' => bcrypt($request->password),'avatar' => $avatar,'slug' => str_slug($name),'created_at' => $created_at,'updated_at' => $updated_at)
-         );
+            array('name' => $request->name, 'position' => $request->position, 'rol' => $request->rol, 'email' => $request->email, 'password' => bcrypt($request->password), 'avatar' => $avatar, 'slug' => str_slug($name), 'created_at' => $created_at, 'updated_at' => $updated_at)
+        );
        
 
        
