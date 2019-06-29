@@ -12,7 +12,6 @@ enabled:
   - final_internal_class
   - void_return
   - strict_comparison
-  - simplified_null_return
   - final_internal_class
   - ereg_to_preg
 
