@@ -6,7 +6,6 @@ disabled:
 enabled:
   - mb_str_functions
   - no_homoglyph_names
-  - psr4
   - non_printable_character
   - random_api_migration
   - declare_strict_types
