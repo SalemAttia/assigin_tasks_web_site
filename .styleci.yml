@@ -8,7 +8,6 @@ enabled:
   - no_homoglyph_names
   - non_printable_character
   - random_api_migration
-  - declare_strict_types
   - final_internal_class
   - void_return
   - strict_comparison
