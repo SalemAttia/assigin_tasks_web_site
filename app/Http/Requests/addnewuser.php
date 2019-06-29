@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -24,10 +23,9 @@ class addnewuser extends FormRequest
     public function rules()
     {
         return [
-        
-        'name' => 'required|max:255',
-        'email' => 'required|email|max:255|unique:users',
-        'password' => 'required|min:6|confirmed'
+            'name'     => 'required|max:255',
+            'email'    => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
         ];
     }
 }
