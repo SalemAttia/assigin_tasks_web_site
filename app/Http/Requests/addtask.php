@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -24,10 +23,10 @@ class addtask extends FormRequest
     public function rules()
     {
         return [
-             'taskname' => 'required',
-            'assignedto' => 'required',
+            'taskname'    => 'required',
+            'assignedto'  => 'required',
             'description' => 'required',
-            'deadline' => 'required',
+            'deadline'    => 'required',
         ];
     }
 }

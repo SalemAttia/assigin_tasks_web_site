@@ -1,9 +1,8 @@
 <?php
-
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -15,7 +14,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','position','rol', 'avatar','slug'
+        'name', 'email', 'password', 'position', 'rol', 'avatar', 'slug',
     ];
 
     /**
@@ -27,8 +26,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-     public function task()
+    public function task()
     {
-            return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class);
     }
 }
