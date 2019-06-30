@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
      * @param \Illuminate\Http\Request                 $request
      * @param \Illuminate\Auth\AuthenticationException $exception
      *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
